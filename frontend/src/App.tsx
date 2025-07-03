@@ -57,7 +57,7 @@ export const App: React.FC = () => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const response = await fetch('http://localhost:5001/api/users/verify', {
+          const response = await fetch('https://dsa-lpr.onrender.com/api/users/verify', {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -194,7 +194,7 @@ export const App: React.FC = () => {
     if (forgotStep === 'email') {
       // Step 1: Get security question
       try {
-        const res = await fetch('http://localhost:5001/api/users/forgot-password', {
+        const res = await fetch('https://dsa-lpr.onrender.com/api/users/forgot-password', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: forgotEmail })
@@ -215,7 +215,7 @@ export const App: React.FC = () => {
     } else if (forgotStep === 'question') {
       // Step 2: Verify answer
       try {
-        const res = await fetch('http://localhost:5001/api/users/verify-security-answer', {
+        const res = await fetch('https://dsa-lpr.onrender.com/api/users/verify-security-answer', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: forgotEmail, securityAnswer: forgotSecurityAnswer })
@@ -247,7 +247,7 @@ export const App: React.FC = () => {
       return;
     }
     try {
-      const res = await fetch('http://localhost:5001/api/users/reset-password', {
+      const res = await fetch('https://dsa-lpr.onrender.com/api/users/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: forgotEmail, newPassword })
