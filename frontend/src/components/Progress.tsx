@@ -81,12 +81,7 @@ export const Progress: React.FC<ProgressProps> = ({ data }) => {
       <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 text-center">
         <h3 className="text-xl font-bold text-gray-900 mb-4">No progress yet</h3>
         <p className="mb-6 text-gray-600">You haven't started any topics yet. Start learning to see your progress here!</p>
-        <a
-          href="/"
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          Go to Dashboard
-        </a>
+        
       </div>
     );
   }
