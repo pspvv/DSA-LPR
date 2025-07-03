@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5001/api';
+const API_URL = 'https://dsa-lpr.onrender.com/api';
 const GNN_API_URL = 'http://localhost:8501';
 
 // User API
@@ -16,7 +16,7 @@ export const login = async (email: string, password: string) => {
 
 export async function register({ name, email, password, securityQuestion, securityAnswer }: { name: string; email: string; password: string; securityQuestion?: string; securityAnswer?: string }) {
   console.log('Register API payload:', { name, email, password, securityQuestion, securityAnswer });
-  const res = await fetch('http://localhost:5001/api/users/register', {
+  const res = await fetch('https://dsa-lpr.onrender.com/api/users/register', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, email, password, securityQuestion, securityAnswer })
