@@ -54,7 +54,7 @@ export const ExamPage: React.FC<ExamPageProps> = ({
       try {
         const token = localStorage.getItem('token');
         const response = await fetch(
-          `http://localhost:5001/api/quizzes/random?topic=${encodeURIComponent(topic.name)}&count=10`,
+          `https://dsa-lpr.onrender.com/api/quizzes/random?topic=${encodeURIComponent(topic.name)}&count=10`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -141,7 +141,7 @@ export const ExamPage: React.FC<ExamPageProps> = ({
         timeTaken
       };
       console.log('Submitting exam result payload:', payload);
-      const response = await fetch('http://localhost:5001/api/exam-results', {
+      const response = await fetch('https://dsa-lpr.onrender.com/api/exam-results', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
