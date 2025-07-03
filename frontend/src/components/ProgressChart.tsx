@@ -22,8 +22,9 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({ data }) => {
     copper: 0,
     brass: 0,
   };
-  completed.forEach(item => {
+  data.forEach(item => {
     const score = item.score || 0;
+    if (score === 0) return; // No badge for zero score
     if (score === 100) badgeCounts.diamond++;
     else if (score >= 90) badgeCounts.platinum++;
     else if (score >= 80) badgeCounts.gold++;
