@@ -14,7 +14,7 @@ const SelectKnownTopics: React.FC<SelectKnownTopicsProps> = ({ onContinue }) => 
     const fetchTopics = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5001/api/topics', {
+        const response = await fetch('https://dsa-lpr.onrender.com/api/topics', {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await response.json();
