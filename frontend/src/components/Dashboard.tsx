@@ -63,7 +63,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     const fetchTopics = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5001/api/topics', {
+        const response = await axios.get('https://dsa-lpr.onrender.com/api/topics', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -87,7 +87,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     const fetchUserTopics = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5001/api/user-topics/my', {
+        const response = await axios.get('https://dsa-lpr.onrender.com/api/user-topics/my', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUserTopics(response.data);
@@ -243,7 +243,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       });
       // Refetch user topics to get the latest progress
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5001/api/user-topics/my', {
+      const response = await axios.get('https://dsa-lpr.onrender.com/api/user-topics/my', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUserTopics(response.data);
@@ -257,7 +257,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       try {
         console.log('Trying fallback to original exam-results endpoint...');
         const token = localStorage.getItem('token');
-        await axios.post('http://localhost:5001/api/exam-results', {
+        await axios.post('https://dsa-lpr.onrender.com/api/exam-results', {
           topicName: examTopic.name,
           score,
           totalQuestions,
@@ -268,7 +268,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         });
         
         // Refetch user topics
-        const response = await axios.get('http://localhost:5001/api/user-topics/my', {
+        const response = await axios.get('https://dsa-lpr.onrender.com/api/user-topics/my', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUserTopics(response.data);
@@ -303,7 +303,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         
         // Refetch user topics to get the updated list
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5001/api/user-topics/my', {
+        const response = await axios.get('https://dsa-lpr.onrender.com/api/user-topics/my', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUserTopics(response.data);
