@@ -63,7 +63,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     const fetchTopics = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('https://dsa-lpr.onrender.com/api/topics', {
+        const response = await axios.get('http://localhost:5001/api/topics', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -87,7 +87,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     const fetchUserTopics = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('https://dsa-lpr.onrender.com/api/user-topics/my', {
+        const response = await axios.get('http://localhost:5001/api/user-topics/my', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUserTopics(response.data);
@@ -234,7 +234,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   }) => {
     if (!examTopic) return;
     try {
-      const result = await submitExamResult({
+      await submitExamResult({
         topicName: examTopic.name,
         score,
         totalQuestions,
@@ -243,15 +243,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
       });
       // Refetch user topics to get the latest progress
       const token = localStorage.getItem('token');
-      const response = await axios.get('https://dsa-lpr.onrender.com/api/user-topics/my', {
+      const response = await axios.get('http://localhost:5001/api/user-topics/my', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUserTopics(response.data);
-      if (result.updated) {
-        alert('Exam submitted successfully! Your score has been updated.');
-      } else {
-        alert('Exam submitted! Your previous score was higher, so it was kept.');
-      }
     } catch (err: unknown) {
       console.error('Exam submission error details:', err);
       const axiosError = err as { response?: { data?: unknown; status?: number } };
@@ -262,7 +257,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       try {
         console.log('Trying fallback to original exam-results endpoint...');
         const token = localStorage.getItem('token');
-        await axios.post('https://dsa-lpr.onrender.com/api/exam-results', {
+        await axios.post('http://localhost:5001/api/exam-results', {
           topicName: examTopic.name,
           score,
           totalQuestions,
@@ -273,11 +268,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
         });
         
         // Refetch user topics
-        const response = await axios.get('https://dsa-lpr.onrender.com/api/user-topics/my', {
+        const response = await axios.get('http://localhost:5001/api/user-topics/my', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUserTopics(response.data);
-        alert('Exam submitted successfully! (Using fallback method)');
       } catch (fallbackErr) {
         console.error('Fallback also failed:', fallbackErr);
         alert('Failed to save exam result. Please try again.');
@@ -309,7 +303,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         
         // Refetch user topics to get the updated list
         const token = localStorage.getItem('token');
-        const response = await axios.get('https://dsa-lpr.onrender.com/api/user-topics/my', {
+        const response = await axios.get('http://localhost:5001/api/user-topics/my', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUserTopics(response.data);
@@ -359,14 +353,23 @@ export const Dashboard: React.FC<DashboardProps> = ({
   // Calculate locked topics count (topics not in completed, current, or recommended)
   const lockedTopicsCount = topics.length - knownTopics.length - currentTopics.length - recommendedTopics.length;
 
-  // Create progress data for the Progress component using only completed topics
-  const completedTopicsProgressData: ProgressData[] = knownTopics.map(t => ({
-    topicName: t.topicName,
-    score: t.progress ?? 0,
-    completed: t.status === 'completed',
-    lastAttempted: t.lastAttempted || '',
-    difficulty: t.difficulty
-  }));
+  // Create progress data for the Progress component using both completed and current topics
+  const completedTopicsProgressData: ProgressData[] = [
+    ...knownTopics.map(t => ({
+      topicName: t.topicName,
+      score: t.progress ?? 0,
+      completed: t.status === 'completed',
+      lastAttempted: t.lastAttempted || '',
+      difficulty: t.difficulty
+    })),
+    ...currentTopics.map(t => ({
+      topicName: t.topicName,
+      score: t.progress ?? 0,
+      completed: false, // Not completed, but in progress
+      lastAttempted: t.lastAttempted || '',
+      difficulty: t.difficulty
+    }))
+  ];
 
   if (loading) {
     return (
