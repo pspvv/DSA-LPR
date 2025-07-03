@@ -33,7 +33,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ user, onProfileImageCh
     setUploading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/users/upload-profile-image', {
+      const response = await fetch('https://dsa-lpr.onrender.com/api/users/upload-profile-image', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`
